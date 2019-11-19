@@ -10,7 +10,7 @@ const restify = require('restify');
 const { BotFrameworkAdapter } = require('botbuilder');
 
 // This bot's main dialog.
-const { EchoBot } = require('./bot');
+const { EchoBot } = require('./bots/bot');
 
 // Import required bot configuration.
 const ENV_FILE = path.join(__dirname, '.env');
