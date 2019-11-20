@@ -1,8 +1,10 @@
 const { ActivityHandler } = require('botbuilder');
 
 class GreetingBot extends ActivityHandler {
-    constructor() {
+
+    constructor(botStateService) {
         super();
+        this.botStateService = botStateService;        
         this.onMessage(async (context, next) => {
 
             await next();
