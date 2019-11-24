@@ -15,28 +15,35 @@ class GreetingBot extends ActivityHandler {
         this.userState = userState;
         this.conversationState = conversationState;
 
-        this.onMessage(async (context, next) => {
+        this.onMessage(async (context, next) => {            
+            await this.getName(context, next);            
+        });
 
-            const name = await this.userNameProperty.get(context);
+        this.onMembersAdded(async (context, next) => {
+            await this.getName(context, next);
+        });
+
+        this.getName = async (context, next) => {
+
+            const userName = await this.userNameProperty.get(context);
             const prompted = await this.promptedProperty.get(context);
-            
-            if (name) {
-                context.sendActivity(`Hi ${name}. How can I help you today?`);
+
+            if (userName) {
+                await context.sendActivity(`Hi ${userName}. How can I help you today?`);
             } else {
-                if (this.prompted) {
+                if (prompted) {
 
-                    const name = context.activity.from.name;
+                    const text = context.activity.text
 
-                    context.sendActivity(`Thanks ${name}. How can I help you today?`);
+                    await context.sendActivity(`Thanks ${text}. How can I help you today?`);
 
-                    this.userNameProperty.set(context, name);
+                    await this.userNameProperty.set(context, text);
                     // Resets the flag to allow the bot to go throught the cycle again
-                    this.promptedProperty.set(context, false);
+                    await this.promptedProperty.set(context, false);
 
                 } else {
-
-                    context.sendActivity('no action');
-                    this.promptedProperty.set(context, true);
+                    await context.sendActivity('What is your name?');
+                    await this.promptedProperty.set(context, true);
                 }
             }
 
@@ -44,18 +51,7 @@ class GreetingBot extends ActivityHandler {
             await this.conversationState.saveChanges(context);
 
             await next();
-        });
-
-        this.onMembersAdded(async (context, next) => {
-            const membersAdded = context.activity.membersAdded;
-            membersAdded.forEach(member => {
-                if (member.id !== context.activity.recipient.id) {
-                    context.sendActivity(`What is your name?`);
-                    this.promptedProperty.set(context, true);
-                }
-            });
-            await next();
-        });
+        }
     }
 
 }
