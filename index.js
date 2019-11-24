@@ -5,12 +5,10 @@ const dotenv = require('dotenv');
 const path = require('path');
 const restify = require('restify');
 
-// Import required bot services.
-// See https://aka.ms/bot-services to learn more about the different parts of a bot.
-const { BotFrameworkAdapter } = require('botbuilder');
+const { BotFrameworkAdapter, UserState, MemoryStorage, ConversationState } = require('botbuilder');
 
 // This bot's main dialog.
-const { EchoBot } = require('./bots/bot');
+const { GreetingBot } = require('./bots/greeting_bot');
 
 // Import required bot configuration.
 const ENV_FILE = path.join(__dirname, '.env');
@@ -51,8 +49,12 @@ adapter.onTurnError = async (context, error) => {
     await context.sendActivity('To continue to run this bot, please fix the bot source code.');
 };
 
+const memoryStorage = new MemoryStorage();
+const userState = new UserState(memoryStorage);
+const conversationState = new ConversationState(memoryStorage);
+
 // Create the main dialog.
-const myBot = new EchoBot();
+const myBot = new GreetingBot(userState, conversationState);
 
 // Listen for incoming requests.
 server.post('/api/messages', (req, res) => {
