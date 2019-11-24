@@ -15,12 +15,17 @@ class GreetingBot extends ActivityHandler {
         this.userState = userState;
         this.conversationState = conversationState;
 
-        this.onMessage(async (context, next) => {            
-            await this.getName(context, next);            
+        this.onMessage(async (context, next) => {
+            await this.getName(context, next);
         });
 
         this.onMembersAdded(async (context, next) => {
-            await this.getName(context, next);
+            const membersAdded = context.activity.membersAdded;            
+            for (let cnt = 0; cnt < membersAdded.length; ++cnt) {
+                if (membersAdded[cnt].id !== context.activity.recipient.id) {
+                    await this.getName(context, next);
+                }
+            }
         });
 
         this.getName = async (context, next) => {
