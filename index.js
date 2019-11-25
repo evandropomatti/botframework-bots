@@ -5,6 +5,8 @@ const dotenv = require('dotenv');
 const path = require('path');
 const restify = require('restify');
 
+var azure = require('botbuilder-azure');
+
 const { BotFrameworkAdapter, UserState, MemoryStorage, ConversationState } = require('botbuilder');
 
 // This bot's main dialog.
@@ -13,6 +15,19 @@ const { GreetingBot } = require('./bots/greeting_bot');
 // Import required bot configuration.
 const ENV_FILE = path.join(__dirname, '.env');
 dotenv.config({ path: ENV_FILE });
+
+// Configure Cosmos DB
+
+// var documentDbOptions = {
+//     host: process.env.COSMOS_URI, 
+//     masterKey: process.env.COSMOS_CONNECTION_STRING, 
+//     database: 'greetingbot2',   
+//     collection: 'messages2'
+// };
+
+// var docDbClient = new azure.DocumentDbClient(documentDbOptions);
+
+// var cosmosStorage = new azure.AzureBotStorage({ gzipData: false }, docDbClient);
 
 // Create HTTP server
 const server = restify.createServer();

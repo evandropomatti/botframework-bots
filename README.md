@@ -15,6 +15,17 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 
 ## To run the bot
 
+- Create a Cosmos DB instance:
+
+    ```s
+    az login
+    az group create -n <name> -l <location>
+    az cosmosdb create -n pluralsightgreetingbot -g pluralSight
+    az cosmosdb sql container create -g <group> -a <account> -d greetingbot -n messages --partition-key-path "/messages"
+    az cosmosdb sql container create -g pluralSight -a pluralsightgreetingbot -d greetingbot -n messages --partition-key-path "/messages"
+    ```
+- Set `COSMOS_URI` and `COSMOS_MASTER_KEY` value in the `.env` file
+
 - Install modules
 
     ```bash
