@@ -23,7 +23,18 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
     az cosmosdb create -n pluralsightgreetingbot -g pluralSight
     az cosmosdb sql container create -g <group> -a <account> -d greetingbot -n messages --partition-key-path "/messages"    
     ```
+- Create a Storage Account:
+
+    ```s
+    az login
+    az group create -n <name> -l <location>
+    az storage account create -n <name> -g <group> -l <location> --kind StorageV2 --sku Standard_LRS
+    az storage container create -n messages --connection-string "<CONNECTION_STRING>"
+    ```
+
 - Set `COSMOS_URI` and `COSMOS_MASTER_KEY` value in the `.env` file
+
+- Set `STORAGE_CONNECTION_STRING` value in the `.env` file
 
 - Install modules
 
