@@ -20,7 +20,8 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
     ```s
     az login
     az group create -n <name> -l <location>
-    az cosmosdb create -n pluralsightgreetingbot -g pluralSight
+    az cosmosdb create -n <name> -g pluralSight
+    az cosmosdb sql database create -a <account> -g <group> -n <name> --throughput 400
     az cosmosdb sql container create -g <group> -a <account> -d greetingbot -n messages --partition-key-path "/messages"    
     ```
 - Create a Storage Account:
