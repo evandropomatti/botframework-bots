@@ -29,6 +29,7 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 
     ```bash
     npm install
+    npm install -g yo generator-botbuilder
     ```
 
 - Start the bot

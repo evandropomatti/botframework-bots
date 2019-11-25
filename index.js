@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const restify = require('restify');
 
-var azure = require('botbuilder-azure');
+//var azure = require('botbuilder-azure');
 
 const { BotFrameworkAdapter, UserState, MemoryStorage, ConversationState } = require('botbuilder');
 
@@ -18,16 +18,14 @@ dotenv.config({ path: ENV_FILE });
 
 // Configure Cosmos DB
 
-var documentDbOptions = {
-    host: process.env.COSMOS_URI, 
-    masterKey: process.env.COSMOS_CONNECTION_STRING, 
-    database: 'greetingbot2',   
-    collection: 'messages2'
+const { BlobStorage } = require('botbuilder-azure');
+
+var options = {
+    containerName: 'messages', 
+    storageAccountOrConnectionString: process.env.STORAGE_CONNECTION_STRING, 
 };
 
-var docDbClient = new azure.DocumentDbClient(documentDbOptions);
-
-var cosmosStorage = new azure.AzureBotStorage({ gzipData: false }, docDbClient);
+const blobStorage = new BlobStorage(options);
 
 // Create HTTP server
 const server = restify.createServer();
@@ -64,9 +62,9 @@ adapter.onTurnError = async (context, error) => {
     await context.sendActivity('To continue to run this bot, please fix the bot source code.');
 };
 
-const memoryStorage = new MemoryStorage();
-const userState = new UserState(memoryStorage);
-const conversationState = new ConversationState(memoryStorage);
+//const memoryStorage = new MemoryStorage();
+const userState = new UserState(blobStorage);
+const conversationState = new ConversationState(blobStorage);
 
 // Create the main dialog.
 const myBot = new GreetingBot(userState, conversationState);
