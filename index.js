@@ -1,13 +1,10 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
 const dotenv = require('dotenv');
 const path = require('path');
 const restify = require('restify');
 
-//var azure = require('botbuilder-azure');
+const { BotFrameworkAdapter, UserState, ConversationState } = require('botbuilder');
 
-const { BotFrameworkAdapter, UserState, MemoryStorage, ConversationState } = require('botbuilder');
+const { StorageFactory } = require('./factories/storageFactory')
 
 // This bot's main dialog.
 const { GreetingBot } = require('./bots/greeting_bot');
@@ -16,16 +13,6 @@ const { GreetingBot } = require('./bots/greeting_bot');
 const ENV_FILE = path.join(__dirname, '.env');
 dotenv.config({ path: ENV_FILE });
 
-// Configure Cosmos DB
-
-const { BlobStorage } = require('botbuilder-azure');
-
-var options = {
-    containerName: 'messages', 
-    storageAccountOrConnectionString: process.env.STORAGE_CONNECTION_STRING, 
-};
-
-const blobStorage = new BlobStorage(options);
 
 // Create HTTP server
 const server = restify.createServer();
@@ -62,9 +49,9 @@ adapter.onTurnError = async (context, error) => {
     await context.sendActivity('To continue to run this bot, please fix the bot source code.');
 };
 
-//const memoryStorage = new MemoryStorage();
-const userState = new UserState(blobStorage);
-const conversationState = new ConversationState(blobStorage);
+const storage = new StorageFactory().getStorage();
+const userState = new UserState(storage);
+const conversationState = new ConversationState(storage);
 
 // Create the main dialog.
 const myBot = new GreetingBot(userState, conversationState);
