@@ -18,16 +18,16 @@ dotenv.config({ path: ENV_FILE });
 
 // Configure Cosmos DB
 
-// var documentDbOptions = {
-//     host: process.env.COSMOS_URI, 
-//     masterKey: process.env.COSMOS_CONNECTION_STRING, 
-//     database: 'greetingbot2',   
-//     collection: 'messages2'
-// };
+var documentDbOptions = {
+    host: process.env.COSMOS_URI, 
+    masterKey: process.env.COSMOS_CONNECTION_STRING, 
+    database: 'greetingbot2',   
+    collection: 'messages2'
+};
 
-// var docDbClient = new azure.DocumentDbClient(documentDbOptions);
+var docDbClient = new azure.DocumentDbClient(documentDbOptions);
 
-// var cosmosStorage = new azure.AzureBotStorage({ gzipData: false }, docDbClient);
+var cosmosStorage = new azure.AzureBotStorage({ gzipData: false }, docDbClient);
 
 // Create HTTP server
 const server = restify.createServer();
