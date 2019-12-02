@@ -7,7 +7,7 @@ const { BotFrameworkAdapter, UserState, ConversationState } = require('botbuilde
 const { StorageFactory } = require('./factories/storageFactory')
 
 // This bot's main dialog.
-const { DialogBot } = require('./bots/dialogBot');
+const { GreetingBot } = require('./bots/greetingBot');
 
 // Import required bot configuration.
 const ENV_FILE = path.join(__dirname, '.env');
@@ -54,7 +54,7 @@ const userState = new UserState(storage);
 const conversationState = new ConversationState(storage);
 
 // Create the main dialog.
-const myBot = new DialogBot(userState, conversationState);
+const myBot = new GreetingBot(userState, conversationState);
 
 // Listen for incoming requests.
 server.post('/api/messages', (req, res) => {

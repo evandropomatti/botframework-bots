@@ -15,7 +15,11 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 
 ## To run the bot
 
-- Create a Cosmos DB instance:
+Choose your storage strategy according to the [storage factory](factories/storageFactory.js).
+
+- Option 1: Memory
+
+- Option 2: Cosmos DB:
 
     ```s
     az login
@@ -24,7 +28,7 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
     az cosmosdb sql database create -a <account> -g <group> -n <name> --throughput 400
     az cosmosdb sql container create -g <group> -a <account> -d greetingbot -n messages --partition-key-path "/messages"    
     ```
-- Create a Storage Account:
+- Option 3: Storage Account:
 
     ```s
     az login
@@ -33,18 +37,14 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
     az storage container create -n messages --connection-string "<CONNECTION_STRING>"
     ```
 
-- Set `COSMOS_URI` and `COSMOS_MASTER_KEY` value in the `.env` file
-
-- Set `STORAGE_CONNECTION_STRING` value in the `.env` file
-
-- Install modules
+#### Install modules
 
     ```bash
     npm install
     npm install -g yo generator-botbuilder
     ```
 
-- Start the bot
+#### Start the bot
 
     ```bash
     npm start

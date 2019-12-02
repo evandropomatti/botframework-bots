@@ -10,6 +10,8 @@ class DialogBot extends ActivityHandler {
         
         const dialogs = new DialogSet(dialogState);
 
+        const DIALOG_ONE = 'dialog_identifier_value';
+
         this.onTurn(async (context, next) => {
 
             await super.onTurn(context, next);
