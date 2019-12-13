@@ -8,10 +8,10 @@ This bot has been created using [Bot Framework](https://dev.botframework.com), i
 
 - [Node.js](https://nodejs.org) version 10.14.1 or higher
 
-    ```bash
-    # determine node version
-    node --version
-    ```
+```bash
+# determine node version
+node --version
+```
 
 ## To run the bot
 
@@ -21,34 +21,34 @@ Choose your storage strategy according to the [storage factory](factories/storag
 
 - Option 2: Cosmos DB:
 
-    ```s
-    az login
-    az group create -n <name> -l <location>
-    az cosmosdb create -n <name> -g pluralSight
-    az cosmosdb sql database create -a <account> -g <group> -n <name> --throughput 400
-    az cosmosdb sql container create -g <group> -a <account> -d greetingbot -n messages --partition-key-path "/messages"    
-    ```
+```s
+az login
+az group create -n <name> -l <location>
+az cosmosdb create -n <name> -g pluralSight
+az cosmosdb sql database create -a <account> -g <group> -n <name> --throughput 400
+az cosmosdb sql container create -g <group> -a <account> -d greetingbot -n messages --partition-key-path "/messages"    
+```
 - Option 3: Storage Account:
 
-    ```s
-    az login
-    az group create -n <name> -l <location>
-    az storage account create -n <name> -g <group> -l <location> --kind StorageV2 --sku Standard_LRS
-    az storage container create -n messages --connection-string "<CONNECTION_STRING>"
-    ```
+```s
+az login
+az group create -n <name> -l <location>
+az storage account create -n <name> -g <group> -l <location> --kind StorageV2 --sku Standard_LRS
+az storage container create -n messages --connection-string "<CONNECTION_STRING>"
+```
 
 #### Install modules
 
-    ```bash
-    npm install
-    npm install -g yo generator-botbuilder
-    ```
+```bash
+npm install
+npm install -g yo generator-botbuilder
+```
 
 #### Start the bot
 
-    ```bash
-    npm start
-    ```
+```bash
+npm start
+```
 
 ## Testing the bot using Bot Framework Emulator
 
